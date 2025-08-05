@@ -31,33 +31,35 @@ export default function ChallengeList() {
   }, []);
 
   return (
-    <div className="p-6 space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Created Challenges</h2>
-      {challenges.length === 0 && (
-        <p className="text-gray-500">No challenges created yet.</p>
-      )}
-      {challenges.map((ch) => (
-        <div
-          key={ch.id}
-          className="border border-gray-300 rounded-lg p-4 shadow-sm bg-white relative"
-        >
-          <button
-            onClick={() => deleteChallenge(ch.id)}
-            className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm"
+    <div className="flex justify-center bg-gray-50 min-h-screen p-10">
+      <div className="w-full max-w-2xl space-y-4">
+        <h2 className="text-2xl font-bold text-gray-800">📋 Created Challenges</h2>
+        {challenges.length === 0 && (
+          <p className="text-gray-500">No challenges created yet.</p>
+        )}
+        {challenges.map((ch) => (
+          <div
+            key={ch.id}
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 relative"
           >
-            🗑 Delete
-          </button>
-          <p className="text-lg font-semibold text-blue-700">{ch.title}</p>
-          <p className="text-sm text-gray-600">
-            Team: {ch.teamMembers?.join(", ")}
-          </p>
-          <p className="text-sm">Reward: {ch.reward}</p>
-          <p className="text-sm">D-Day: {ch.dDay}</p>
-          <p className="text-xs text-gray-400">
-            Created At: {new Date(ch.created_at).toLocaleString()}
-          </p>
-        </div>
-      ))}
+            <button
+              onClick={() => deleteChallenge(ch.id)}
+              className="absolute top-3 right-4 text-red-500 text-sm hover:text-red-700"
+            >
+              🗑 Delete
+            </button>
+            <p className="text-lg font-semibold text-blue-700">{ch.title}</p>
+            <p className="text-sm text-gray-600">
+              Team: {ch.teamMembers?.join(", ")}
+            </p>
+            <p className="text-sm text-gray-700">Reward: {ch.reward}</p>
+            <p className="text-sm text-gray-700">D-Day: {ch.dDay}</p>
+            <p className="text-xs text-gray-400">
+              Created At: {new Date(ch.created_at).toLocaleString()}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
