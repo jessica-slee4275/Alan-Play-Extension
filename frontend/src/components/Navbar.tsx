@@ -1,19 +1,40 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { isAuthed, logout, getRole } from "../auth";
+import { useMemo } from "react";
 
 export default function Navbar() {
-  const location = useLocation();
+  const navigate = useNavigate();
+  const authed = isAuthed();
+  const role = useMemo(() => getRole(), [authed]); // renew automatically if token changes
 
-  const isActive = (path: string) =>
-    location.pathname === path ? "text-blue-600 font-semibold border-b-2 border-blue-600" : "text-gray-600";
+  const onLogout = () => {
+    logout();
+    navigate("/", { replace: true });
+  };
+
+  const isAdmin = role === "admin";
 
   return (
-    <nav className="flex items-center space-x-6 px-6 py-4 bg-white border-b shadow-sm">
-      <Link to="/" className={`hover:text-blue-500 ${isActive("/")}`}>
-        ➕ Create Challenge
-      </Link>
-      <Link to="/list" className={`hover:text-blue-500 ${isActive("/list")}`}>
-        📋 View Challenges
-      </Link>
+    <nav className="flex items-center gap-4 p-3 border-b bg-white">
+      <Link to="/dashboard" className="font-semibold">Alan Play Extension</Link>
+      {/* admin only */}
+      {authed && isAdmin && (
+        <>
+          <Link to="/create-challenge">Create Challenge</Link>
+          <Link to="/list">View Challenges</Link>
+        </>
+      )}
+
+      <div className="ml-auto flex items-center gap-3">
+        {authed ? (
+          <>
+            <span className="text-sm text-slate-600">{role}</span>
+            <button onClick={onLogout} className="underline">Logout</button>
+          </>
+        ) : (
+          <Link to="/">Login</Link>
+        )}
+      </div>
     </nav>
   );
 }
