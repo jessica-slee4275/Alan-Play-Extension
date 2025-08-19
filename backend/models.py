@@ -13,13 +13,16 @@ class Challenge(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
+        tm = (self.team_members or "").strip()
+        team_list = [x.strip() for x in tm.split(",") if x.strip()] if tm else []
         return {
             "id": self.id,
             "title": self.title,
-            "teamMembers": self.team_members.split(","),  # to list
             "reward": self.reward,
-            "dDay": self.d_day,
-            "created_at": self.created_at.isoformat(),
+            "d_day": self.d_day,
+            "team_members": self.team_members,      
+            "team_members_list": team_list,        
+            "created_at": self.created_at.isoformat() if self.created_at else None,
         }
 
 class User(db.Model):

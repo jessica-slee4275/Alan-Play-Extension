@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from "axios";  
+import axios from "axios";
 
 interface Challenge {
   id: number;
   title: string;
-  teamMembers: string[];
+  team_members: string[] | string;
   reward: string;
-  dDay: string;
+  d_day: string;
   created_at: string;
 }
 
@@ -50,10 +50,13 @@ export default function ChallengeList() {
             </button>
             <p className="text-lg font-semibold text-blue-700">{ch.title}</p>
             <p className="text-sm text-gray-600">
-              Team: {ch.teamMembers?.join(", ")}
+              Team: {Array.isArray(ch.team_members)
+                ? ch.team_members.join(", ")
+                : ch.team_members}
             </p>
+
             <p className="text-sm text-gray-700">Reward: {ch.reward}</p>
-            <p className="text-sm text-gray-700">D-Day: {ch.dDay}</p>
+            <p className="text-sm text-gray-700">D-Day: {ch.d_day}</p>
             <p className="text-xs text-gray-400">
               Created At: {new Date(ch.created_at).toLocaleString()}
             </p>

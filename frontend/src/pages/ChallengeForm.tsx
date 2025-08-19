@@ -5,7 +5,7 @@ export default function ChallengeForm() {
   const [title, setTitle] = useState("");
   const [teamMembers, setTeamMembers] = useState("");
   const [reward, setReward] = useState("");
-  const [dDay, setDDay] = useState("");
+  const [d_day, setDDay] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,7 +13,7 @@ export default function ChallengeForm() {
       title,
       teamMembers: teamMembers.split(",").map((name) => name.trim()),
       reward,
-      dDay,
+      d_day,
     });
     alert("✅ Challenge created!");
     setTitle("");
@@ -51,7 +51,7 @@ export default function ChallengeForm() {
         <input
           className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="D-Day (YYYY-MM-DD)"
-          value={dDay}
+          value={d_day}
           onChange={(e) => setDDay(e.target.value)}
         />
 
